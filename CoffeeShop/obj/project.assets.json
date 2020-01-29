@@ -8619,19 +8619,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ilona R\\.nuget\\packages\\": {}
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ilona R\\source\\repos\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\C#\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj",
       "projectName": "CoffeeShop",
-      "projectPath": "C:\\Users\\Ilona R\\source\\repos\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj",
-      "packagesPath": "C:\\Users\\Ilona R\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ilona R\\source\\repos\\CoffeeShop\\CoffeeShop\\obj\\",
+      "projectPath": "C:\\Users\\ASUS\\Desktop\\C#\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ASUS\\Desktop\\C#\\CoffeeShop\\CoffeeShop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Ilona R\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8702,7 +8702,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
