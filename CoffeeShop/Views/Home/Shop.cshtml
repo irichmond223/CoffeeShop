@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ShopDBContext
+
+
+<table>
+    <!--tr have us a table row to keep separate from other table rows-->
+    <tr>
+        <!--th or table heaer allows us to name our coulms of data-->
+        <th>Name</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Price</th>
+    </tr>
+
+    @foreach (Items items in Model.Items)
+    {
+        <!--we have tr table row in the loop to make a new row for each row of data-->
+<tr>
+    <td><h4>@items.Name</h4></td>
+    <td><h4>@items.Description</h4></td>
+    <td><h4>@items.Quantity</h4></td>
+    <td><h4>@items.Price</h4></td>
+    <!--use Razor syntax if statement to access c# if statement-->
+    <!--this if statement determines if the following html is displayed-->
+    <!--we cast to bool-->
+    @if ((bool)TempData["Registered"])
+    {
+        <td><button>Buy</button></td>
+    }
+
+</tr>
+    }
+
+</table>
+

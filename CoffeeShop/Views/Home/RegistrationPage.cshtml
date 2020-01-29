@@ -8,11 +8,11 @@
 <link href="~/css/site.css" rel="stylesheet" />
 
 
-<form asp-controller="Home" asp-action="AddUser" id="signIn">
+<form method ="POST" asp-controller="Home" asp-action="AddUser" id="signIn">
     <fieldset>
         <div class="form-group">
             <label>User Name</label>
-            <input type="text" class="form-control" id="username" placeholder="User Name" name="UserName" pattern="[a-z]{1,15}" required />
+            <input type="text" class="form-control" id="username" placeholder="User Name" name="Username" pattern="[A-Za-z]{1,15}" required />
         </div>
         <div class="form-group">
         <label>First Name</label>
@@ -34,6 +34,7 @@
         <div class="form-group">
             <label>Password</label>
             <input type="password" class="form-control" placeholder="Password" name="Password" pattern="(?=.*\d)(?=.*[A-Z]).*" required />
+            <small>Upper and lower cases, numbers, and special characters: #,$, etc.</small>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
