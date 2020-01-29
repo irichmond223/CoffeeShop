@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\Desktop\\C#\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj": {}
+    "C:\\Users\\ilona\\source\\repos\\MVC\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\Desktop\\C#\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj": {
+    "C:\\Users\\ilona\\source\\repos\\MVC\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\C#\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj",
+        "projectUniqueName": "C:\\Users\\ilona\\source\\repos\\MVC\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj",
         "projectName": "CoffeeShop",
-        "projectPath": "C:\\Users\\ASUS\\Desktop\\C#\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj",
+        "projectPath": "C:\\Users\\ilona\\source\\repos\\MVC\\CoffeeShop\\CoffeeShop\\CoffeeShop.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Desktop\\C#\\CoffeeShop\\CoffeeShop\\obj\\",
+        "outputPath": "C:\\Users\\ilona\\source\\repos\\MVC\\CoffeeShop\\CoffeeShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
