@@ -3,9 +3,24 @@
 
 // Write your JavaScript code.
 
-var emailField = document.querySelector("email");
-var signInForm = document.querySelector("signIn");
+//var emailField = document.querySelector("email");
+//var signInForm = document.querySelector("signIn");
 
-emailField.addEventListener('keyup', function (event) {
-    isValidEmail = emailField.checkValidity();
-});
+//emailField.addEventListener('keyup', function (event) {
+//    isValidEmail = emailField.checkValidity();
+//});
+
+//function called on form submit, controls whether form gets submitted
+function Validate() {
+    //console.log to know i am entering this function
+    var confirmPassword = document.querySelector("#ConfirmPassword").value;
+
+
+    if (name == confirmPassword) {
+        return true;
+    }
+    else {
+        //if no match is found return false stopping submission
+        return false;
+    }
+}

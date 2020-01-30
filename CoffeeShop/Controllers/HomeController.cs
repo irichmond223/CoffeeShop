@@ -19,35 +19,15 @@ namespace CoffeeShop.Controllers
         }
 
         public IActionResult Index()
-        {
+        { 
+            ShopDBContext db = new ShopDBContext();
+        
             TempData["bool"] = false;
 
-            return View();
+            return View(db);
         }
 
-        //public IActionResult Register()
-        //{
-        //    var testObj = new User();
-
-        //    ShopDBContext db = new ShopDBContext();
-
-        //    //foreach loop to pull out individual rows of data
-        //    foreach (User u in db.User)
-        //    {
-        //        testObj = new User()
-        //        {
-        //            Username = u.Username,
-        //            FirstName = u.FirstName,
-        //            LastName = u.LastName,
-        //            Email = u.Email,
-        //            Password = u.Password,
-        //            Phone = u.Phone
-        //        };
-
-        //    }
-        //    return View();
-        //}
-
+        
         public IActionResult AddUser(User u)
         {
             //use he RegisterTestContext object to access db data
@@ -73,16 +53,13 @@ namespace CoffeeShop.Controllers
             db.SaveChanges();
 
             return View(u);
-           
         }
 
         //need one action to load our RegistrationPage, also need a view
         public IActionResult RegistrationPage()
         {
-
-            return View();
+            return View("RegistrationPage");
         }
-        
 
         //need one action to take those user inputs, and display the user name, in a new view
 
@@ -91,21 +68,7 @@ namespace CoffeeShop.Controllers
             return View();
         }
 
-
-        //public IActionResult AddUser(string userName, string email, string password, int phone) //make a Person object as a param and let the framework map the values
-        //{
-        // make to Viewbag objects to hold my 4 prameters
-        //ViewBag.UserName = userName;
-        // ViewBag.Email = email;
-        //ViewBag.Password = password;
-        // ViewBag.Phone = phone;
-
-
-        // return View();
-
-        // }
-
-        public IActionResult Validate(string result)
+        public IActionResult Validate(string Username)
         {
             ShopDBContext db = new ShopDBContext();
 
@@ -120,41 +83,69 @@ namespace CoffeeShop.Controllers
             foreach (User u in db.User)
             {
                 //as i iterate through the collection, i want to find the correct result
-                if (u.Username == result)
+                if (u.Username == Username)
                 {
                     //if you find a match, assign that value to your temp Person object
                     foundResult = u;
 
-                    //You found a match, set your TempData to true
+                    //You found a match, set your TempData to true 
                     //This allows us to display certain HTML
                     //flip this value  
                     TempData["Registered"] = true;
                     return Shop();
                 }
-                else
-                {
-                    return View("Login");
-                }
             }
 
-            return View(foundResult);
-            
+            //if we made it this far we checked everyone in the database and didn't find a match
+            return RegistrationPage();
         }
         public IActionResult Shop()
-        { 
+        {
             ShopDBContext db = new ShopDBContext();
             return View("Shop", db);
-        
+
             //Use my context class to pull in my db data
-            
-                }
+        }
+
+        //public IActionResult AddUser(string userName, string email, string password, int phone) //make a Person object as a param and let the framework map the values
+        //{
+        // make to Viewbag objects to hold my 4 prameters
+        //ViewBag.UserName = userName;
+        // ViewBag.Email = email;
+        //ViewBag.Password = password;
+        // ViewBag.Phone = phone;
+
+        // return View();
+        // }
+
+        //public IActionResult Register()
+        //{
+        //    var testObj = new User();
+
+        //    ShopDBContext db = new ShopDBContext();
+
+        //    //foreach loop to pull out individual rows of data
+        //    foreach (User u in db.User)
+        //    {
+        //        testObj = new User()
+        //        {
+        //            Username = u.Username,
+        //            FirstName = u.FirstName,
+        //            LastName = u.LastName,
+        //            Email = u.Email,
+        //            Password = u.Password,
+        //            Phone = u.Phone
+        //        };
+
+        //    }
+        //    return View();
+        //}
+
+
 
         //public IActionResult AddUser(User use) //make a User object as a param and let the framework map the values
         //{
-        
-
         //return View(use);
-
         //}
 
         public IActionResult Privacy()
