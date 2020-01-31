@@ -6,35 +6,40 @@
 
 @model ShopDBContext
 
+<link href="~/css/Shop.css" rel="stylesheet" />
+<div class="flex-container">
+    <h1>Welcome to the Shopping Cart!</h1>
+    </div>
+    <div class="flex-container">
+        <table>
+            <!--tr have us a table row to keep separate from other table rows-->
+            <tr>
+                <!--th or table heaer allows us to name our coulms of data-->
+                <th>Name</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
 
-<table>
-    <!--tr have us a table row to keep separate from other table rows-->
-    <tr>
-        <!--th or table heaer allows us to name our coulms of data-->
-        <th>Name</th>
-        <th>Description</th>
-        <th>Quantity</th>
-        <th>Price</th>
-    </tr>
+            @foreach (Items items in Model.Items)
+            {
+                <!--we have tr table row in the loop to make a new row for each row of data-->
+                <tr>
+                    <td><p>@items.Name</p></td>
+                    <td><p>@items.Description</p></td>
+                    <td><p>@items.Quantity</p></td>
+                    <td><p>@Math.Round(items.Price, 2)</p></td>
+                    <!--use Razor syntax if statement to access c# if statement-->
+                    <!--this if statement determines if the following html is displayed-->
+                    <!--we cast to bool-->
+                    @if ((bool)TempData["Registered"])
+                    {
+                        <td><button onclick="location.href = '@Url.Action("ItemSelectionView","Home", new { price = items.Price})'">Buy</button></td>
+                    }
 
-    @foreach (Items items in Model.Items)
-    {
-        <!--we have tr table row in the loop to make a new row for each row of data-->
-<tr>
-    <td><h4>@items.Name</h4></td>
-    <td><h4>@items.Description</h4></td>
-    <td><h4>@items.Quantity</h4></td>
-    <td><h4>@items.Price</h4></td>
-    <!--use Razor syntax if statement to access c# if statement-->
-    <!--this if statement determines if the following html is displayed-->
-    <!--we cast to bool-->
-    @if ((bool)TempData["Registered"])
-    {
-        <td><button>Buy</button></td>
-    }
+                </tr>
+            }
 
-</tr>
-    }
-
-</table>
+        </table>
+    </div>
 

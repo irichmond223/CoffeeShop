@@ -33,9 +33,9 @@ namespace CoffeeShop.Models
         {
             modelBuilder.Entity<Users>(entity =>
             {
-                entity.HasKey(e => e.Username);
+                entity.HasKey(e => e.ID);
 
-                entity.Property(e => e.Username)
+                entity.Property(e => e.UserName)
                     .HasMaxLength(50)
                     .IsFixedLength();
 

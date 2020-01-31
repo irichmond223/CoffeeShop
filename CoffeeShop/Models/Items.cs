@@ -9,10 +9,11 @@ namespace CoffeeShop.Models
     public partial class Items
     {
 
-        [Key] 
+        [Key]
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int? Quantity { get; set; }
-        public decimal? Price { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
     }
 }

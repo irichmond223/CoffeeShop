@@ -10,7 +10,8 @@ namespace CoffeeShop.Models
 
     {
         [Key]
-        public string Username { get; set; }
+        public int ID { get; set; }
+        public string UserName { get; set; }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
