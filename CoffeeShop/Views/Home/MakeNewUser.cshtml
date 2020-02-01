@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "MakeNewUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Users
+
+<div class="text-center">
+    <h1>Greetings!</h1>
+</div>
+
+
+
+
+<h1>Welcome @Model.UserName</h1>
+<h1><a asp-controller="Home" asp-action="Login">Click here to log in</a></h1>
+
+
+<!--we use Razor syntax to access the global ViewBag objects-->
+<!--<h1>@ViewBag.Username</h1>-->

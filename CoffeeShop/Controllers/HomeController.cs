@@ -28,7 +28,7 @@ namespace CoffeeShop.Controllers
         }
 
         
-        public IActionResult AddUser(Users u)
+        public IActionResult MakeNewUser(Users u)
         {
             //use he RegisterTestContext object to access db data
             ShopDBContext db = new ShopDBContext();
@@ -56,9 +56,9 @@ namespace CoffeeShop.Controllers
         }
 
         //need one action to load our RegistrationPage, also need a view
-        public IActionResult RegistrationPage()
+        public IActionResult Register()
         {
-            return View("RegistrationPage");
+            return View("Register");
         }
 
         //need one action to take those user inputs, and display the user name, in a new view
@@ -97,7 +97,7 @@ namespace CoffeeShop.Controllers
             }
 
             //if we made it this far we checked everyone in the database and didn't find a match
-            return RegistrationPage();
+            return Register();
         }
         public IActionResult Shop()
         {
