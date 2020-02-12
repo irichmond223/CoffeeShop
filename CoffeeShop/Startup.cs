@@ -32,6 +32,14 @@ namespace CoffeeShop
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            //use service object, and set the IdentityOptions to check for confirmed email
+            services.Configure<IdentityOptions>(
+                options => 
+                options.SignIn.RequireConfirmedEmail = true
+                );
+            services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -57,6 +65,7 @@ namespace CoffeeShop
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

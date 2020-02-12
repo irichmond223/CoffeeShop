@@ -6,11 +6,14 @@ a.navbar-brand {
   text-align: center;
   word-break: break-all;
 }
-
+.detailimage {
+    height: 10em;
+}
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
 }
+
 .emailField:valid {
     border-color: black;
 }
@@ -41,8 +44,41 @@ html {
   }
 }
 
+.img{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 85em;
+    height: 30em;
+    opacity: 0.5;
+    position: absolute;
+    left:5em;
+    right:15em;
+    z-index: -2;
+}
+
+.display-4, .white-p {
+    color: white;
+    padding-bottom: .5em;
+}
+
+
+
+.brown-border {
+    border-color: #654321;
+    border-radius:.5em;
+    color: black;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
@@ -88,7 +124,7 @@ body {
 form {
     display: flex;
     flex-direction: column;
-    width: 20%;
+
 }
 input {
     margin-bottom: 1em;

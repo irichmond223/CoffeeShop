@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CoffeeShop.Models
 {
     public partial class Items
     {
+        public Items()
+        {
+            UserItems = new HashSet<UserItems>();
+        }
 
-        [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
+        public string ImageUrl { get; set; }
+
+        public virtual ICollection<UserItems> UserItems { get; set; }
     }
 }

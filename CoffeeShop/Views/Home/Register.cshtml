@@ -1,4 +1,4 @@
-﻿
+﻿@model Users
 @{
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,8 +14,8 @@
             <input type="text" class="form-control" id="username" placeholder="User Name" name="UserName" pattern="[A-Za-z]{1,15}" required />
         </div>
         <div class="form-group">
-            <label>First Name</label>
-            <input type="text" class="form-control" id="FirstName" placeholder="First Name" name="FirstName" pattern="[A-Za-z]{1,}" required />
+            <label asp-for="FirstName" class="alert-danger">First Name</label>
+            <input asp-for="FirstName" type="text" class="form-control" id="FirstName" placeholder="First Name" name="FirstName" pattern="[A-Za-z]{1,}" required />
         </div>
         <div class="form-group">
             <label>Last Name</label>
@@ -26,15 +26,17 @@
             <input type="email" class="form-control" placeholder="Email" id="email" name="Email" pattern="[a-z0-9._%+-]{1,40}[@@]{1}[a-z]{1,10}[.]{1}[a-z]{3}" required />
         </div>
         <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" class="form-control" placeholder="Phone Number" name="Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
-            <small>###-###-####</small>
-        </div>
+        <label>Phone Number</label>
+        <input type="tel" class="form-control" placeholder="Phone Number" name="Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+        <small>###-###-####</small>
+    </div>
+        
         <div class="form-group">
             <label>Password</label>
             <input type="password" class="form-control" placeholder="Password" id="ConfirmPassword" name="Password" pattern="(?=.*\d)(?=.*[A-Z]).*" required />
             <small>Upper and lower cases, numbers, and special characters: #,$, etc.</small>
         </div>
+        
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">

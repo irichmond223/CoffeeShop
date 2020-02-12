@@ -9,37 +9,69 @@
 <link href="~/css/Shop.css" rel="stylesheet" />
 <div class="flex-container">
     <h1>Welcome to the Shopping Cart!</h1>
-    </div>
-    <div class="flex-container">
-        <table>
-            <!--tr have us a table row to keep separate from other table rows-->
-            <tr>
-                <!--th or table heaer allows us to name our coulms of data-->
-                <th>Name</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
+</div>
+<div class="flex">
 
-            @foreach (Items items in Model.Items)
-            {
-                <!--we have tr table row in the loop to make a new row for each row of data-->
-                <tr>
-                    <td><p>@items.Name</p></td>
-                    <td><p>@items.Description</p></td>
-                    <td><p>@items.Quantity</p></td>
-                    <td><p>@Math.Round(items.Price, 2)</p></td>
-                    <!--use Razor syntax if statement to access c# if statement-->
-                    <!--this if statement determines if the following html is displayed-->
-                    <!--we cast to bool-->
-                    @if ((bool)TempData["Registered"])
+        <!--<table>
+    <!--tr have us a table row to keep separate from other table rows-->
+        <!--<tr>
+    <!--th or table heaer allows us to name our coulms of data-
+        <th>Name</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        </tr>
+        -->
+
+        @foreach (Items items in Model.Items)
+        {
+            <!--we have tr table row in the loop to make a new row for each row of data-->
+    <div class="main-blogging">
+        <div class="child">
+            <!--<img class="card-img detailimage" src="~/imgs/@items.ImageUrl .jpg" />-->
+            <img class="card-img detailimage" src="@Url.Content("/@items.ImageUrl.jpg") " />
+            <p>Item Name: @items.Name</p>
+
+            <p>Description: @items.Description</p>
+            <p>Quantity: @items.Quantity</p>
+            <p>Price:$ @Math.Round(items.Price, 2)</p>
+            <!--use Razor syntax if statement to access c# if statement-->
+            <!--this if statement determines if the following html is displayed-->
+            <!--we cast to bool-->
+                @if (User.Identity.IsAuthenticated)
+                
                     {
-                        <td><button onclick="location.href = '@Url.Action("ItemSelectionView","Home", new { price = items.Price})'">Buy</button></td>
+
+
+                        <button style="text-align:center" class="align-middle" name="Name" onclick="location.href='@Url.Action("Buy", "Home", new { Price = items.Price, quantity = items.Quantity - 1, name = items.Name})'">Buy</button>
                     }
+                </div>
+    </div>
+                }
 
-                </tr>
-            }
 
-        </table>
+            </div>
+    
+
+<!--<div class="flex">
+    <div class="main-blogging">
+        <h5>I am a blogger</h5>
+        <img src="https://neilpatel.com/wp-content/uploads/2017/09/5-Common-Blogging-Mistakes-And-How-to-Fix-Them.jpg" alt="Image result for blogging images" height="100" />
+        <p>
+            I’m not into fashion blogs all that much, what I can tell you most about this site is that the author’s personality takes the spotlight.It’s a personal fashion blog, so that makes sense, but the general principle here is that her personality is inserted without pause.
+        </p>
     </div>
 
+    <div class="main-developing">
+        <h5>Passion For Development</h5>
+        <img src="https://www.business.com/images/content/5a6/90b4e51ee4720458b456b/1500-0-" alt="Image result for coding images" height="100" />
+        <p>I have developed an interest in Front-end/web development when I started my career in the healthcare industry. At my current company, I get opportunities to communicate with IT team on a monthly basis. While in the bootcamp, I learned HTML5, CSS3, JavaScript, Angular 7 and NodeJS. Currently, I am in the back-end development program learning how to code in C# language using .Net Core. </p>
+    </div>
+
+    <div class="main-hometown">
+        <h5>My hometown is Kiev, Ukraine</h5>
+        <img src="https://www.mywanderlust.pl/wp-content/uploads/2018/08/visit-kiev-ukraine-9.jpg" alt="Image result for ukraine kiev" height="100" />
+        <p>Kiev is the capital of Ukraine, it has over 2 million of people living in the city. Kiev has amazing food choices from all over the world, all the restaurants are decorated with a taste. I try to go back and visit Kiev every year and walk around the Dnepr river. Its fun to take a boat ride and watch sunset.</p>
+    </div>
+</div>
+    -->

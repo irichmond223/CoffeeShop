@@ -2,12 +2,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/css/site.css" />
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome to GC Coffee</h1>
-        <h2>Are you a new user?<a asp-controller="Home" asp-action="RegistrationPage"> Register</a></h2>
-        <h2>Would you like to sign in?<a asp-controller="Home" asp-action="Login"> Login</a></h2>
-        <img src="http://static1.squarespace.com/static/5081d50c84ae11269e707c6d/514fb079e4b04c6ad1874c85/514fb091e4b023ca2900e6a4/1475829986939/black-dog-coffee-kansas-city-social.jpg?format=1500w" alt="Image result for coffee shop photo" />
+<div class="text-center">
+
+
+
+    <img class="img" src="https://brewminate.com/wp-content/uploads/2019/12/122019-27-Caffeine-Sleep.jpg" alt="Image result for coffee photos wide" />
+    <h1 class="display-4">
+        Welcome to Ilona's Coffee Shop
+    </h1>
+    <p class="white-p">Are you a new user?<a asp-controller="Home" asp-action="Register"> Register</a></p>
+    <p class="white-p">Would you like to sign in?<a asp-controller="Home" asp-action="Login"> Login</a></p>
+
+    <button style="text-align:center" class="align-middle brown-border" onclick="window.location.href = 'https://localhost:44304/Home/Shop';">Browse our Selections</button>
+</div>
+
+
+
+<!--<form class="col-xl-12">
+    <div class="col-xl-6 col-lg-6">
+        <input type="text" class="col-xl-12 col-lg-6 col-md-4" />
+        <input type="submit" class="col-xl-12 col-lg-6 col-md-4" />
+        <input type="text" class="col-xl-12 col-lg-6 col-md-4" />
+        <input type="submit" class="col-xl-12 col-lg-6 col-md-4" />
     </div>
-
+    <div class="col-xl-6 col-lg-6">
+        <input type="text" class="col-xl-12 col-lg-6 col-md-4" />
+        <input type="submit" class="col-xl-12 col-lg-6 col-md-4" />
+        <input type="text" class="col-xl-12 col-lg-6 col-md-4" />
+        <input type="submit" class="col-xl-12 col-lg-6 col-md-4" />
+    </div>
+</form>
+    -->
