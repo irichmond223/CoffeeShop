@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CoffeeShop.Controllers
 {
-    [Authorize]
+  
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -80,57 +80,58 @@ namespace CoffeeShop.Controllers
         //need one action to load our RegistrationPage, also need a view
         public IActionResult Register()
         {
-            return View("Register");
+            ShopDBContext db = new ShopDBContext();
+            db.SaveChanges();
+            return View("Register", db);
         }
 
         //need one action to take those user inputs, and display the user name, in a new view
- 
+
         public IActionResult Login()
         {
             return View();
         }
 
-  
+        public IActionResult RegistrationPage()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Validate(Users u)
+        public IActionResult Validate(string username, string password)
         {
+
             ShopDBContext db = new ShopDBContext();
-            var validateEmail = db.Users.Where(b => b.UserName == u.UserName).FirstOrDefault();
-            var validatePw = db.Users.Where(b => b.UserName == u.UserName && b.Password == u.Password).FirstOrDefault();
-            if (validateEmail != null && validatePw != null)
-            {
-                HttpContext.Session.SetInt32("current", validatePw.Id);
+            Users users = new Users();
 
-                return RedirectToAction("Shop");
-            }
-            else if (validateEmail == null)
-            {
-                TempData["IncorrectEmail"] = true;
-                return View("Login");
-            }
-            else if (validatePw == null)
-            {
-                TempData["IncorrectPw"] = true;
-                return View("Login");
-            }
-            else
-            {
-               
-              
-                return RedirectToAction("Login");
-            }
+            HttpContext.Session.SetString("Registered", "false");
 
+            foreach (Users user in db.Users)
+            {
+                if (user.UserName !=null && user.Password != null && user.UserName == username && user.Password == password)
+                {
+                    users = user;
 
+                    HttpContext.Session.SetString("UserInSession", "true");
+                    return RedirectToAction("Shop");
 
+                }
+                else
+                {
+                    return RedirectToAction("Login");
+
+                }
+            }
+            return View(users);
         }
 
         [HttpPost]
         [Authorize]
         public ActionResult Logout()
         {
-           
+
             return RedirectToAction("Index");
         }
 
@@ -143,7 +144,25 @@ namespace CoffeeShop.Controllers
 
             //Use my context class to pull in my db data
         }
-        public IActionResult Buy(decimal? Price, string Name, int Quantity)
+
+        public IActionResult MakeNewUser(decimal? Price, Users u)
+        {
+            ShopDBContext db = new ShopDBContext();
+            List<AspNetUsers> userList = db.AspNetUsers.ToList();
+            List<Items> itemList = db.Items.ToList();
+
+            u = JsonSerializer.Deserialize<Users>(HttpContext.Session.GetString("Users"));
+
+            if (u.Funds >= Price)
+            {
+                u.Funds = u.Funds - Price;
+                db.Update(u);
+                db.SaveChanges();
+                return View("Summary");
+            }
+            return View("Shop");
+        }
+        public IActionResult Purchase(decimal? Price, string Name, int Quantity)
         {
             ShopDBContext db = new ShopDBContext();
             /*List<AspNetUsers> userList = db.AspNetUsers.ToList();
@@ -172,9 +191,9 @@ namespace CoffeeShop.Controllers
                     db.SaveChanges();
                 }
             }
-        
 
-            foreach(Users users in userList)
+
+            foreach (Users users in userList)
             {
                 if (users.Email == User.Identity.Name)
                 {
@@ -182,58 +201,62 @@ namespace CoffeeShop.Controllers
                     db.Users.Update(users);
                     db.SaveChanges();
 
-                    return View("Shop", db);
-    }
-}
-            return View("Shop", db);
+                    return View("Summary", db);
+                }
+            }
+            return View("Summary", db);
         }
-        public IActionResult Summary()
+        public IActionResult Summary(Items item)
         {
-            return View();
+            ShopDBContext db = new ShopDBContext();
+            db.Add(item);
+            
+
+            return View("Summary",db);
         }
 
-            //public IActionResult AddUser(string userName, string email, string password, int phone) //make a Person object as a param and let the framework map the values
-            //{
-            // make to Viewbag objects to hold my 4 prameters
-            //ViewBag.UserName = userName;
-            // ViewBag.Email = email;
-            //ViewBag.Password = password;
-            // ViewBag.Phone = phone;
+        //public IActionResult AddUser(string userName, string email, string password, int phone) //make a Person object as a param and let the framework map the values
+        //{
+        // make to Viewbag objects to hold my 4 prameters
+        //ViewBag.UserName = userName;
+        // ViewBag.Email = email;
+        //ViewBag.Password = password;
+        // ViewBag.Phone = phone;
 
-            // return View();
-            // }
+        // return View();
+        // }
 
-            //public IActionResult Register()
-            //{
-            //    var testObj = new User();
+        //public IActionResult Register()
+        //{
+        //    var testObj = new User();
 
-            //    ShopDBContext db = new ShopDBContext();
+        //    ShopDBContext db = new ShopDBContext();
 
-            //    //foreach loop to pull out individual rows of data
-            //    foreach (User u in db.User)
-            //    {
-            //        testObj = new User()
-            //        {
-            //            Username = u.Username,
-            //            FirstName = u.FirstName,
-            //            LastName = u.LastName,
-            //            Email = u.Email,
-            //            Password = u.Password,
-            //            Phone = u.Phone
-            //        };
+        //    //foreach loop to pull out individual rows of data
+        //    foreach (User u in db.User)
+        //    {
+        //        testObj = new User()
+        //        {
+        //            Username = u.Username,
+        //            FirstName = u.FirstName,
+        //            LastName = u.LastName,
+        //            Email = u.Email,
+        //            Password = u.Password,
+        //            Phone = u.Phone
+        //        };
 
-            //    }
-            //    return View();
-            //}
+        //    }
+        //    return View();
+        //}
 
 
 
-            //public IActionResult AddUser(User use) //make a User object as a param and let the framework map the values
-            //{
-            //return View(use);
-            //}
+        //public IActionResult AddUser(User use) //make a User object as a param and let the framework map the values
+        //{
+        //return View(use);
+        //}
 
-            public IActionResult Privacy()
+        public IActionResult Privacy()
         {
             //use get string to retrieve the data in the session
             var testSession = HttpContext.Session.GetString("TempKey");

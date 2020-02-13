@@ -23,7 +23,7 @@ namespace CoffeeShop.Models
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Items> Items { get; set; }
-        public virtual DbSet<User> User { get; set; }
+       
         public virtual DbSet<UserItems> UserItems { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
@@ -151,33 +151,6 @@ namespace CoffeeShop.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Price).HasColumnType("money");
-            });
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Phone).HasMaxLength(50);
-
-                entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<UserItems>(entity =>

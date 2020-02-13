@@ -7,50 +7,46 @@
 @model ShopDBContext
 
 <link href="~/css/Shop.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/site.css" />
 <div class="flex-container">
     <h1>Welcome to the Shopping Cart!</h1>
 </div>
 <div class="flex">
 
-        <!--<table>
-    <!--tr have us a table row to keep separate from other table rows-->
-        <!--<tr>
-    <!--th or table heaer allows us to name our coulms of data-
-        <th>Name</th>
-        <th>Description</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        </tr>
-        -->
 
-        @foreach (Items items in Model.Items)
-        {
-            <!--we have tr table row in the loop to make a new row for each row of data-->
-    <div class="main-blogging">
-        <div class="child">
-            <!--<img class="card-img detailimage" src="~/imgs/@items.ImageUrl .jpg" />-->
-            <img class="card-img detailimage" src="@Url.Content("/@items.ImageUrl.jpg") " />
+    @foreach (Items items in Model.Items)
+    {
+
+        <!--we have tr table row in the loop to make a new row for each row of data-->
+        <div class="main-container">
+
+
+            <img class="card-img detailimage" src="~/Images/Americano.jpg" />
+
+
             <p>Item Name: @items.Name</p>
 
             <p>Description: @items.Description</p>
             <p>Quantity: @items.Quantity</p>
-            <p>Price:$ @Math.Round(items.Price, 2)</p>
+            <p>Price: $@Math.Round(items.Price, 2)</p>
             <!--use Razor syntax if statement to access c# if statement-->
             <!--this if statement determines if the following html is displayed-->
             <!--we cast to bool-->
-                @if (User.Identity.IsAuthenticated)
-                
-                    {
+            @if (Context.Session.Keys.Contains("UserInSession"))
 
 
-                        <button style="text-align:center" class="align-middle" name="Name" onclick="location.href='@Url.Action("Buy", "Home", new { Price = items.Price, quantity = items.Quantity - 1, name = items.Name})'">Buy</button>
-                    }
-                </div>
-    </div>
-                }
+            {
 
 
-            </div>
+                <button style="text-align:center" class="align-middle brown-border" name="Name" onclick="location.href='@Url.Action("Purchase", "Home", new { Price = items.Price, quantity = items.Quantity - 1, name = items.Name })'">Buy</button>
+            }
+
+        </div>
+    }
+        
+
+
+</div>
     
 
 <!--<div class="flex">

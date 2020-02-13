@@ -32,16 +32,14 @@ namespace CoffeeShop
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-
-            //use service object, and set the IdentityOptions to check for confirmed email
-            services.Configure<IdentityOptions>(
-                options => 
-                options.SignIn.RequireConfirmedEmail = true
-                );
-            services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            //session
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);//You can set Time   
+            });
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,11 +59,13 @@ namespace CoffeeShop
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //session
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
@@ -77,3 +77,4 @@ namespace CoffeeShop
         }
     }
 }
+

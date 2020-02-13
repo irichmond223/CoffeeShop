@@ -421,7 +421,6 @@ C:\Users\ilona\source\repos\MVC\CoffeeShop\CoffeeShop\obj\Debug\netcoreapp3.1\Co
 C:\Users\ilona\source\repos\MVC\CoffeeShop\CoffeeShop\obj\Debug\netcoreapp3.1\CoffeeShop.csproj.CopyComplete
 C:\Users\ilona\source\repos\MVC\CoffeeShop\CoffeeShop\obj\Debug\netcoreapp3.1\CoffeeShop.dll
 C:\Users\ilona\source\repos\MVC\CoffeeShop\CoffeeShop\obj\Debug\netcoreapp3.1\CoffeeShop.pdb
-C:\Users\ilona\source\repos\MVC\CoffeeShop\CoffeeShop\obj\Debug\netcoreapp3.1\Razor\Views\Home\ItemSelectionView.cshtml.g.cs
 C:\Users\ilona\source\repos\MVC\CoffeeShop\CoffeeShop\obj\Debug\netcoreapp3.1\Razor\Views\Home\MakeNewUser.cshtml.g.cs
 C:\Users\ilona\source\repos\MVC\CoffeeShop\CoffeeShop\obj\Debug\netcoreapp3.1\Razor\Views\Home\Register.cshtml.g.cs
 C:\Users\ilona\source\repos\MVC\CoffeeShop\CoffeeShop\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
