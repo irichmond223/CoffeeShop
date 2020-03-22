@@ -23,7 +23,6 @@ namespace CoffeeShop.Models
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Items> Items { get; set; }
-       
         public virtual DbSet<UserItems> UserItems { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
@@ -162,18 +161,6 @@ namespace CoffeeShop.Models
                 entity.Property(e => e.ItemId).HasColumnName("ItemID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Item)
-                    .WithMany(p => p.UserItems)
-                    .HasForeignKey(d => d.ItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserItems_Items");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserItems)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserItems_Users");
             });
 
             modelBuilder.Entity<Users>(entity =>

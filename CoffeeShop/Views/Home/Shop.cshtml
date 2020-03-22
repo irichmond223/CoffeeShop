@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
+
 @{
     ViewData["Title"] = "Shop";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,6 +11,24 @@
 <link rel="stylesheet" href="~/css/site.css" />
 <div class="flex-container">
     <h1>Welcome to the Shopping Cart!</h1>
+
+    @if (Convert.ToBoolean(Context.Session.GetString("UserInSession")) == true)
+    {
+        @foreach (Users user in @Model.Users)
+        {
+            if (user.UserName == Context.Session.GetString("User"))
+            {
+                var currentUser = user;
+
+                <a>Current balance: $@Math.Round(Convert.ToDecimal(currentUser.Funds), 2)</a>
+            }
+        }
+    }
+
+    @if (Convert.ToBoolean(Context.Session.GetString("UserInSession")) == true)
+    {
+        <h5><a href="/Home/List">View Cart</a></h5>
+    }
 </div>
 <div class="flex">
 
@@ -18,56 +37,33 @@
     {
 
         <!--we have tr table row in the loop to make a new row for each row of data-->
-        <div class="main-container">
+    <div class="main-container">
 
 
-            <img class="card-img detailimage" src="~/Images/Americano.jpg" />
+        <img class="card-img detailimage" src="~/Images/@items.ImageUrl .jpg" />
 
 
-            <p>Item Name: @items.Name</p>
+        <p>Coffee: @items.Name</p>
 
-            <p>Description: @items.Description</p>
-            <p>Quantity: @items.Quantity</p>
-            <p>Price: $@Math.Round(items.Price, 2)</p>
-            <!--use Razor syntax if statement to access c# if statement-->
-            <!--this if statement determines if the following html is displayed-->
-            <!--we cast to bool-->
-            @if (Context.Session.Keys.Contains("UserInSession"))
-
-
-            {
+        <p>Description: @items.Description</p>
+        <p>Quantity: @items.Quantity</p>
+        <p>Price: $@Math.Round(items.Price, 2)</p>
+        <!--use Razor syntax if statement to access c# if statement-->
+        <!--this if statement determines if the following html is displayed-->
+        <!--we cast to bool-->
+        @if (Convert.ToBoolean(Context.Session.GetString("UserInSession")) == true)
 
 
-                <button style="text-align:center" class="align-middle brown-border" name="Name" onclick="location.href='@Url.Action("Purchase", "Home", new { Price = items.Price, quantity = items.Quantity - 1, name = items.Name })'">Buy</button>
-            }
+        {
+            <button style="text-align:center" class="align-middle brown-border" name="Name" onclick="location.href='@Url.Action("Purchase", "Home", new { Price = items.Price, name = items.Name })'">Buy</button>
+        }
 
-        </div>
+    </div>
     }
-        
 
+   
 
 </div>
-    
 
-<!--<div class="flex">
-    <div class="main-blogging">
-        <h5>I am a blogger</h5>
-        <img src="https://neilpatel.com/wp-content/uploads/2017/09/5-Common-Blogging-Mistakes-And-How-to-Fix-Them.jpg" alt="Image result for blogging images" height="100" />
-        <p>
-            I’m not into fashion blogs all that much, what I can tell you most about this site is that the author’s personality takes the spotlight.It’s a personal fashion blog, so that makes sense, but the general principle here is that her personality is inserted without pause.
-        </p>
-    </div>
 
-    <div class="main-developing">
-        <h5>Passion For Development</h5>
-        <img src="https://www.business.com/images/content/5a6/90b4e51ee4720458b456b/1500-0-" alt="Image result for coding images" height="100" />
-        <p>I have developed an interest in Front-end/web development when I started my career in the healthcare industry. At my current company, I get opportunities to communicate with IT team on a monthly basis. While in the bootcamp, I learned HTML5, CSS3, JavaScript, Angular 7 and NodeJS. Currently, I am in the back-end development program learning how to code in C# language using .Net Core. </p>
-    </div>
 
-    <div class="main-hometown">
-        <h5>My hometown is Kiev, Ukraine</h5>
-        <img src="https://www.mywanderlust.pl/wp-content/uploads/2018/08/visit-kiev-ukraine-9.jpg" alt="Image result for ukraine kiev" height="100" />
-        <p>Kiev is the capital of Ukraine, it has over 2 million of people living in the city. Kiev has amazing food choices from all over the world, all the restaurants are decorated with a taste. I try to go back and visit Kiev every year and walk around the Dnepr river. Its fun to take a boat ride and watch sunset.</p>
-    </div>
-</div>
-    -->

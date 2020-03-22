@@ -9,6 +9,7 @@ using CoffeeShop.Models;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Http;
 
 namespace CoffeeShop.Controllers
 {
@@ -16,76 +17,78 @@ namespace CoffeeShop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private List<Items> itemList;
-        private List<Users> userList;
-        private ShopDBContext db;
+        //these private fields will be used as a way to load in the user and item data
+       // private List<Items> itemList;
+        //private List<Users> userList;
+        //private ShopDBContext db;
 
 
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            GetData();
+            //GetData();
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public IActionResult Index()
         {
-
-            ShopDBContext db = new ShopDBContext();
-            GetData();
-            var userList = db.Users.ToList();
-
-
-            //make a session object and store data in it for later retrieval
-            HttpContext.Session.SetString("TempKey", "Hello World");
-            var y = db.UserItems.Where(userItems => userItems.UserId == 1).ToList();
-
-            //use get string to retrieve the data in the session
-            var testSession = HttpContext.Session.GetString("TempKey");
-
-            //loop through Users, and find attached UserItems
-            foreach (var item in db.Users)
-            {
-                var tempObj = item;
-                var x = "hi";
-            }
-            //grab user items and add to a list
-            var userItems = db.UserItems.ToList();
-
-            TempData["Registered"] = false;
-
             return View();
         }
 
-        private void GetData()
+        //need one action to load our RegistrationPage, also need a view
+        //This is for identity
+        public IActionResult Register()
         {
-            db = new ShopDBContext();
-            itemList = db.Items.ToList();
-            userList = db.Users.ToList();
+            //ShopDBContext db = new ShopDBContext();
+            //db.SaveChanges();
+            //return View("Register", db);
+            return View();
         }
 
+
+        //Get data is used for Identity
+        //private async void GetData()
+        //{
+        //    db = new ShopDBContext();
+        //    itemList = await GetItems();
+        //    userList = db.Users.ToList();
+        //}
+
+        //make a private method to call our CofeeShop API and get a list of items
+        private async Task<List<Items>> GetItems()
+        {
+            using(var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient
+                .GetAsync("https://localhost:44385/api/CoffeeShop/getItems"))
+                {
+                    var stringResponse = await response.Content.ReadAsStringAsync();
+                    //return new List<Items>();
+                    return JsonSerializer.Deserialize<List<Items>>(stringResponse);
+                }
+            }
+        }
+        private async void AddItems(string hello = "Hello")
+        {
+            //var tempJson = JsonSerializer.Serialize()
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient
+                    .GetAsync($"https://localhost:44385/api/CoffeeShop/addItems?Item={hello}"))
+                {
+
+                }
+            }
+        }
         public IActionResult MakeNewUser(Users u)
         {
-            //use he RegisterTestContext object to access db data
+            //use this object to access db data
             ShopDBContext db = new ShopDBContext();
-
-
             db.Add(u);
             db.SaveChanges();
             return View(u);
-
         }
-
-        //need one action to load our RegistrationPage, also need a view
-        public IActionResult Register()
-        {
-            ShopDBContext db = new ShopDBContext();
-            db.SaveChanges();
-            return View("Register", db);
-        }
-
-        //need one action to take those user inputs, and display the user name, in a new view
 
         public IActionResult Login()
         {
@@ -98,23 +101,28 @@ namespace CoffeeShop.Controllers
         }
 
 
-        [HttpPost]
-        [AllowAnonymous]
+        //[HttpPost]
+        //[AllowAnonymous]
         public IActionResult Validate(string username, string password)
         {
-
             ShopDBContext db = new ShopDBContext();
+            //use object to access Users table
             Users users = new Users();
 
-            HttpContext.Session.SetString("Registered", "false");
+            HttpContext.Session.SetString("UserInSession", "false");
+            var searchedUser = db.AspNetUsers.SingleOrDefault(u => u.UserName == username);
 
             foreach (Users user in db.Users)
             {
-                if (user.UserName !=null && user.Password != null && user.UserName == username && user.Password == password)
+                if (user.UserName == username && user.Password == password)
                 {
+                    //declare users (Users table) to match the user 
                     users = user;
 
                     HttpContext.Session.SetString("UserInSession", "true");
+                    HttpContext.Session.SetString("Funds", users.Funds.ToString());
+                    HttpContext.Session.SetString("User", users.UserName.ToString());
+                    HttpContext.Session.SetString("Id", users.Id.ToString());
                     return RedirectToAction("Shop");
 
                 }
@@ -127,134 +135,124 @@ namespace CoffeeShop.Controllers
             return View(users);
         }
 
-        [HttpPost]
-        [Authorize]
-        public ActionResult Logout()
-        {
-
-            return RedirectToAction("Index");
-        }
-
-
-
         public IActionResult Shop()
         {
             ShopDBContext db = new ShopDBContext();
-            return View("Shop", db);
+            return View(db);
 
-            //Use my context class to pull in my db data
         }
 
-        public IActionResult MakeNewUser(decimal? Price, Users u)
+        //public IActionResult MakeNewUser(decimal? Price, Users u)
+        //{
+        //    ShopDBContext db = new ShopDBContext();
+        //    List<AspNetUsers> userList = db.AspNetUsers.ToList();
+        //    List<Items> itemList = db.Items.ToList();
+
+        //    u = JsonSerializer.Deserialize<Users>(HttpContext.Session.GetString("Users"));
+
+        //    if (u.Funds >= Price)
+        //    {
+        //        u.Funds = u.Funds - Price;
+        //        db.Update(u);
+        //        db.SaveChanges();
+        //        return View("Summary");
+        //    }
+        //    return View("Shop");
+        //}
+        public IActionResult Purchase(decimal? Price, string Name)
         {
             ShopDBContext db = new ShopDBContext();
-            List<AspNetUsers> userList = db.AspNetUsers.ToList();
-            List<Items> itemList = db.Items.ToList();
 
-            u = JsonSerializer.Deserialize<Users>(HttpContext.Session.GetString("Users"));
+            Users currentUser = new Users();
+            Items boughtItem = new Items();
 
-            if (u.Funds >= Price)
+            foreach (Users user in db.Users)
             {
-                u.Funds = u.Funds - Price;
-                db.Update(u);
-                db.SaveChanges();
-                return View("Summary");
-            }
-            return View("Shop");
-        }
-        public IActionResult Purchase(decimal? Price, string Name, int Quantity)
-        {
-            ShopDBContext db = new ShopDBContext();
-            /*List<AspNetUsers> userList = db.AspNetUsers.ToList();
-            List<Items> itemList = db.Items.ToList();
-
-            u = JsonSerializer.Deserialize<Users>(HttpContext.Session.GetString("Users"));
-
-            if (u.Funds >= Price)
-            {
-                u.Funds = u.Funds - Price;
-                db.Update(u);
-                db.SaveChanges();
-                return View("Summary");
-            }
-            return View("Shop");*/
-
-            List<Users> userList = db.Users.ToList();
-            List<Items> itemList = db.Items.ToList();
-
-            foreach (Items item in itemList)
-            {
-                if (item.Name == Name)
+                if (user.UserName == HttpContext.Session.GetString("User"))
                 {
-                    item.Quantity = Quantity;
-                    //db.Items.Update(item);
-                    db.SaveChanges();
+                    currentUser = user;
                 }
             }
 
-
-            foreach (Users users in userList)
+            if (currentUser.Funds - Price < 0)
             {
-                if (users.Email == User.Identity.Name)
-                {
-                    users.Funds -= Price;
-                    db.Users.Update(users);
-                    db.SaveChanges();
-
-                    return View("Summary", db);
-                }
+                return View("LowFunds", currentUser);
             }
-            return View("Summary", db);
+            else
+            {
+                foreach (Items item in db.Items)
+                {
+                    if (item.Name == Name)
+                    {
+                        boughtItem = item;
+                        boughtItem.Quantity -= 1;
+                        currentUser.Funds -= Price;
+
+                        db.UserItems.Add(new UserItems { UserId = currentUser.Id, ItemId = boughtItem.Id });
+                    }
+                }
+
+                db.SaveChanges();
+
+                return View("Shop", db);
+            }
+
+            }
+
+        public IActionResult LowFunds(decimal price)
+        {
+            ViewBag.Price = price;
+            return View();
         }
-        public IActionResult Summary(Items item)
+
+        public IActionResult List()
         {
             ShopDBContext db = new ShopDBContext();
-            db.Add(item);
+
+            return View(db);
+        }
+
+        public IActionResult Details(int id)
+        {
+            ShopDBContext db = new ShopDBContext();
+            Items foundItem = new Items();
+
+            foreach (Items item in db.Items)
+            {
+                if (item.Id == id)
+                {
+                    foundItem = item;
+                }
+            }
+            return View(foundItem);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            ShopDBContext db = new ShopDBContext();
+            UserItems foundItem = new UserItems();
+
+            foreach (UserItems item in db.UserItems)
+            {
+                if (item.UserItemId == id)
+                {
+                    foundItem = item;
+                }
+            }
+
+            db.UserItems.Remove(foundItem);
+            db.SaveChanges();
+
+            return View("List", db);
+        }
+
+        public IActionResult Summary()
+        {
             
 
-            return View("Summary",db);
+            return View();
         }
 
-        //public IActionResult AddUser(string userName, string email, string password, int phone) //make a Person object as a param and let the framework map the values
-        //{
-        // make to Viewbag objects to hold my 4 prameters
-        //ViewBag.UserName = userName;
-        // ViewBag.Email = email;
-        //ViewBag.Password = password;
-        // ViewBag.Phone = phone;
-
-        // return View();
-        // }
-
-        //public IActionResult Register()
-        //{
-        //    var testObj = new User();
-
-        //    ShopDBContext db = new ShopDBContext();
-
-        //    //foreach loop to pull out individual rows of data
-        //    foreach (User u in db.User)
-        //    {
-        //        testObj = new User()
-        //        {
-        //            Username = u.Username,
-        //            FirstName = u.FirstName,
-        //            LastName = u.LastName,
-        //            Email = u.Email,
-        //            Password = u.Password,
-        //            Phone = u.Phone
-        //        };
-
-        //    }
-        //    return View();
-        //}
-
-
-
-        //public IActionResult AddUser(User use) //make a User object as a param and let the framework map the values
-        //{
-        //return View(use);
-        //}
 
         public IActionResult Privacy()
         {

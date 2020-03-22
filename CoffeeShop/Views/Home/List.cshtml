@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <link rel="stylesheet" href="~/css/List.css" />
+
+@model ShopDBContext
+
+<div class="shopping-cart">
+    <div class="title">
+        <h1>Order Confirmation</h1>
+        <h5><a href="/Home/Shop">Back to Shop</a></h5>
+    </div>
+
+    @{
+        List<UserItems> cart = new List<UserItems>();
+    }
+
+
+
+
+    @foreach (UserItems userItem in Model.UserItems)
+    {
+        if (Convert.ToInt32(Context.Session.GetString("Id")) == userItem.UserId)
+        {
+            cart.Add(userItem);
+        }
+    }
+
+    @foreach (UserItems item in cart)
+    {
+        @foreach (Items boughtItem in Model.Items)
+        {
+            if (item.ItemId == boughtItem.Id)
+            {
+
+<div class="item">
+    <div class="buttons">
+        <span class="delete-btn" onclick="location.href= '@Url.Action("Delete", "Home", new { id = item.UserItemId })'"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <!-- <span class="delete-btn" onclick="location.href= '@Url.Action("Delete", "Home", new { id = item.UserItemId })'"></span>
+        <span class="like-btn"></span>-->
+    </div>
+    <div class="image">
+        <img class="card-img detailimage" src="~/Images/@boughtItem.ImageUrl .jpg" />
+        </div>
+
+        <div class="description">
+            <span>@boughtItem.Name</span>
+        </div>
+        <div class="quantity">
+            <span>@boughtItem.Quantity.</span>
+        </div>
+
+        <!-- <td>@boughtItem.Name</td>-->
+        <div class="total-price">
+            <span>$@Math.Round(boughtItem.Price, 2)</span>
+        </div>
+
+        <button onclick="location.href= '@Url.Action("Details", "Home", new { id = boughtItem.Id })'">Item Details</button>
+
+        <!-- Product #1 -->
+        <!-- <td><button onclick="location.href= '@Url.Action("Delete", "Home", new { id = item.UserItemId })'">Delete</button></td>-->
+
+    </div>
+    }
+    }
+    }
+
+
+
+
+
+
+
+   
+
+    <script src="https://kit.fontawesome.com/2a6d697381.js" crossorigin="anonymous"></script>
